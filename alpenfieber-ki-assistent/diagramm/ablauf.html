@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KI Personal Assistant – Ablauf & Möglichkeiten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A2432; --hub:#16283C; --bg:#F5F7F9; --card:#FFFFFF;
+    --line:#DCE2E9; --mut:#5B6675; --acc:#0F6E63; --acc-soft:#E4F0EE;
+    --amb:#B4690E; --amb-soft:#F6ECDD; --in:#3D5A80; --in-soft:#E8EEF5;
+    --r:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Inter',-apple-system,'Segoe UI',sans-serif;
+    background:var(--bg); color:var(--ink);
+    font-size:15px; line-height:1.55;
+    padding:28px 16px 64px;
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  h1,h2,h3,.hubtitle{font-family:'Space Grotesk','Inter',sans-serif}
+
+  /* ---------- Header ---------- */
+  header{margin-bottom:34px}
+  .eyebrow{
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--acc);font-weight:600;margin-bottom:10px;
+  }
+  h1{font-size:clamp(26px,5vw,36px);font-weight:700;letter-spacing:-.02em;line-height:1.15}
+  header p{color:var(--mut);margin-top:10px;max-width:60ch}
+
+  /* ---------- Flow ---------- */
+  section{margin-bottom:46px}
+  h2{font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
+  .sub{color:var(--mut);font-size:14px;margin-bottom:18px}
+
+  .flow{display:flex;flex-direction:column;gap:0;align-items:stretch}
+  .col{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:18px 18px 8px;flex:1;
+  }
+  .col-label{
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+    margin-bottom:12px;
+  }
+  .col-in .col-label{color:var(--in)}
+  .col-out .col-label{color:var(--acc)}
+  .item{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:9px 0 11px;border-top:1px solid var(--line);
+  }
+  .item:first-of-type{border-top:none}
+  .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:none}
+  .col-in .dot{background:var(--in)}
+  .col-out .dot{background:var(--acc)}
+  .item b{display:block;font-weight:600;font-size:14px}
+  .item span{color:var(--mut);font-size:12.5px;line-height:1.45;display:block}
+
+  .hubcard{
+    background:var(--hub);color:#F2F5F8;border-radius:var(--r);
+    padding:22px 20px;text-align:center;
+  }
+  .hubtitle{font-size:18px;font-weight:600;letter-spacing:-.01em}
+  .hubcard .tagline{
+    display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:#9FB3C8;font-weight:600;margin-bottom:8px;
+  }
+  .hubcard p{color:#C4D0DC;font-size:13px;margin-top:8px;line-height:1.5}
+  .hubcard .models{
+    margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  }
+  .chip{
+    font-size:11.5px;font-weight:500;padding:4px 10px;border-radius:99px;
+    border:1px solid #3A4E64;color:#D5DEE8;
+  }
+  .arrow{
+    display:flex;justify-content:center;align-items:center;
+    padding:6px 0;color:#94A3B4;flex:none;
+  }
+  .arrow svg{width:20px;height:20px}
+
+  @media(min-width:720px){
+    .flow{flex-direction:row;align-items:stretch;gap:0}
+    .col{display:flex;flex-direction:column}
+    .hubcard{
+      display:flex;flex-direction:column;justify-content:center;
+      flex:0 0 236px;padding:22px 18px;
+    }
+    .arrow{padding:0 8px}
+    .arrow svg{transform:rotate(-90deg)}
+  }
+
+  .flow-note{
+    margin-top:14px;font-size:12.5px;color:var(--mut);
+    display:flex;gap:8px;align-items:flex-start;
+  }
+  .flow-note svg{width:15px;height:15px;flex:none;margin-top:2px;color:var(--mut)}
+
+  /* ---------- Möglichkeitenliste ---------- */
+  .phase{margin-bottom:22px}
+  .phase-head{
+    display:flex;align-items:baseline;gap:10px;margin-bottom:8px;
+  }
+  .phase-num{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;
+    color:var(--acc);background:var(--acc-soft);
+    padding:2px 9px;border-radius:6px;white-space:nowrap;
+  }
+  .phase-num.later{color:var(--amb);background:var(--amb-soft)}
+  .phase-head h3{font-size:14.5px;font-weight:600}
+  .phase-head small{color:var(--mut);font-size:12.5px;font-weight:400}
+  .rows{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    overflow:hidden;
+  }
+  .row{
+    display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+    padding:13px 16px;border-top:1px solid var(--line);
+  }
+  .row:first-child{border-top:none}
+  .row b{font-weight:600;font-size:14px;display:block}
+  .row .tool{color:var(--mut);font-size:12.5px;margin-top:2px;line-height:1.45}
+  .pill{
+    flex:none;font-size:11px;font-weight:600;letter-spacing:.02em;
+    padding:3px 10px;border-radius:99px;margin-top:2px;white-space:nowrap;
+    border:1.5px solid;
+  }
+  .p1{color:#1D7A4F;border-color:#A8D5BE;background:#EDF7F1}
+  .p2{color:#4A6B1F;border-color:#C4D8A4;background:#F3F8EA}
+  .p3{color:#9A6A10;border-color:#E3C88E;background:#FAF3E3}
+  .p4{color:#A03E1C;border-color:#E6B49E;background:#FBEFE8}
+
+  /* ---------- Plattform ---------- */
+  .plat{display:grid;gap:12px}
+  @media(min-width:720px){.plat{grid-template-columns:1fr 1fr 1fr}}
+  .pcard{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:16px;position:relative;
+  }
+  .pcard.reco{border:1.5px solid var(--acc)}
+  .badge{
+    position:absolute;top:-9px;left:14px;background:var(--acc);color:#fff;
+    font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 9px;border-radius:99px;
+  }
+  .pcard h3{font-size:15.5px;font-weight:600;margin-bottom:5px}
+  .pcard p{font-size:13px;color:var(--mut);line-height:1.5}
+  .plat-foot{font-size:12.5px;color:var(--mut);margin-top:12px}
+
+  /* ---------- Geprüft ---------- */
+  .check{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:18px 18px 10px;
+  }
+  .check-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .check-head h2{margin:0;font-size:16px}
+  .check-head small{color:var(--mut);font-size:12px}
+  .check ul{list-style:none}
+  .check li{
+    display:flex;gap:10px;align-items:flex-start;padding:8px 0;
+    border-top:1px solid var(--line);font-size:13.5px;color:#33404F;
+  }
+  .check li:first-child{border-top:none}
+  .check svg{width:16px;height:16px;flex:none;margin-top:2px;color:var(--acc)}
+
+  footer{
+    margin-top:30px;font-size:12.5px;color:var(--mut);
+    border-top:1px solid var(--line);padding-top:16px;
+  }
+  footer b{color:var(--ink)}
+
+  @media(prefers-reduced-motion:no-preference){
+    section,header{animation:rise .5s ease both}
+    section:nth-of-type(2){animation-delay:.06s}
+    section:nth-of-type(3){animation-delay:.12s}
+    section:nth-of-type(4){animation-delay:.18s}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Konzept · Oktober 2026 · Kanal: Telegram</div>
+  <h1>Julians KI-Assistent: Ablauf&nbsp;&amp; Möglichkeiten</h1>
+  <p>Alles läuft über einen zentralen Hub. Julian ändert fast nichts an seiner Arbeitsweise – die Automatisierung holt sich die Informationen dort ab, wo sie ohnehin entstehen.</p>
+</header>
+
+<section>
+  <h2>So arbeitet der Assistent</h2>
+  <p class="sub">Fünf Eingänge, ein Hub, fünf Ergebnisse – ohne manuelles Hochladen oder Extraschritte.</p>
+
+  <div class="flow">
+    <div class="col col-in">
+      <div class="col-label">Eingänge</div>
+      <div class="item"><span class="dot"></span><div><b>Anruf</b><span>Zweithandy nimmt auf → OneDrive → Whisper transkribiert</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>E-Mail-Postfach</b><span>Outlook – ungelesen &amp; unbeantwortet</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>Schnelle Notiz</b><span>Telegram an den Bot (Text oder Sprachnachricht)</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>Zeitplan</b><span>7:30 Uhr Morgen-Digest · 17:30 Uhr Tagesabschluss</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>Trello-Karte fällig</b><span>Deadline erreicht oder überschritten</span></div></div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+    <div class="hubcard">
+      <div>
+        <span class="tagline">Hub</span>
+        <div class="hubtitle">Zapier + Claude</div>
+        <p>versteht, priorisiert und verteilt – nach Regeln aus einem zentralen Prompt-Dokument, das jeder im Team anpassen kann</p>
+        <div class="models"><span class="chip">Claude Sonnet</span><span class="chip">+ Whisper</span></div>
+      </div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+
+    <div class="col col-out">
+      <div class="col-label">Ergebnisse</div>
+      <div class="item"><span class="dot"></span><div><b>Morgen-Digest</b><span>Priorisierte To-do-Liste per Telegram</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>Trello</b><span>Karten werden angelegt, zugeordnet &amp; aktualisiert</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>Kalender</b><span>Deadlines landen automatisch als Termin</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>Erinnerungen</b><span>„Person X zurückrufen", „Karte Y ist überfällig"</span></div></div>
+      <div class="item"><span class="dot"></span><div><b>Auto-Antwort + Nachfassliste</b><span>Alpenfieber-Anmeldungen: antworten &amp; niemanden verlieren</span></div></div>
+    </div>
+  </div>
+
+  <div class="flow-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <span>Ablage &amp; Gedächtnis: OneDrive speichert Transkripte, Zusammenfassungen und das Prompt-Dokument. Anrufaufzeichnung nur mit Einwilligung des Gesprächspartners (DE/CH).</span>
+  </div>
+</section>
+
+<section>
+  <h2>Möglichkeitenliste</h2>
+  <p class="sub">Nach Phasen sortiert – jede Phase baut auf der vorherigen auf.</p>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">Sofort</span><h3>Ohne Automatisierungs-Hub machbar <small>· 1 Tag</small></h3></div>
+    <div class="rows">
+      <div class="row"><div><b>Book-a-Call auf LinkedIn</b><div class="tool">Calendly oder Cal.com – Link ins Profil &amp; in die Signatur, Termine landen automatisch im Kalender</div></div><span class="pill p1">sehr gering</span></div>
+      <div class="row"><div><b>Trello-Erinnerungen bei fälligen Karten</b><div class="tool">Trello Automation (Butler) – eingebaut, kein Zapier nötig</div></div><span class="pill p1">sehr gering</span></div>
+      <div class="row"><div><b>Notiz unterwegs → Trello-Karte</b><div class="tool">Ab sofort ohne Zapier: Mail an die eigene Trello-Board-Adresse = Karte angelegt (später bequemer über den Telegram-Bot)</div></div><span class="pill p1">sehr gering</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">Phase 1</span><h3>Der tägliche Rhythmus <small>· Woche 1–2</small></h3></div>
+    <div class="rows">
+      <div class="row"><div><b>Morgen-Digest um 7:30 Uhr</b><div class="tool">Zapier liest Postfach &amp; Trello, Claude priorisiert (inkl. lange liegengebliebener Mails), Digest per Telegram</div></div><span class="pill p2">gering</span></div>
+      <div class="row"><div><b>Deadlines automatisch im Kalender</b><div class="tool">Zapier: Trello-Karte mit Fälligkeit → Kalendereintrag</div></div><span class="pill p1">sehr gering</span></div>
+      <div class="row"><div><b>Dringende unbeantwortete Mails erkennen</b><div class="tool">Claude bewertet Dringlichkeit nach Regeln im Prompt-Dokument → Erinnerung</div></div><span class="pill p3">mittel</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">Phase 2</span><h3>Anrufe &amp; unterwegs <small>· Woche 3–4</small></h3></div>
+    <div class="rows">
+      <div class="row"><div><b>Anruf → Aufgaben, Deadlines, Zusammenfassung</b><div class="tool">Zweithandy nimmt auf (Lautsprecher) → OneDrive → Whisper transkribiert → Zapier verteilt an Trello, Kalender &amp; OneDrive. Später optional Plaud Note.</div></div><span class="pill p3">mittel</span></div>
+      <div class="row"><div><b>Notizen mit KI-Verständnis</b><div class="tool">Telegram-Notiz („Tatjana wegen X anrufen bis Freitag"), auch als Sprachnachricht → Claude erkennt Aufgabe, Person &amp; Deadline</div></div><span class="pill p2">gering</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num">Phase 3</span><h3>Kunden &amp; Abschluss <small>· Woche 5–6</small></h3></div>
+    <div class="rows">
+      <div class="row"><div><b>Auto-Antwort für Alpenfieber-Anmeldungen</b><div class="tool">Antwort-Template + automatischer Eintrag in Teilnehmer- &amp; Nachfassliste – kein Kontakt geht verloren</div></div><span class="pill p2">gering</span></div>
+      <div class="row"><div><b>Tagesabschluss um 17:30 Uhr</b><div class="tool">Erledigt vs. offen, Boards werden abgeglichen, Kurz-Review per Telegram</div></div><span class="pill p3">mittel</span></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><span class="phase-num later">Phase 4</span><h3>Komfort &amp; Ausbau <small>· wenn alles läuft</small></h3></div>
+    <div class="rows">
+      <div class="row"><div><b>Plaud Note statt Zweithandy</b><div class="tool">Komfort-Upgrade: nimmt beide Gesprächsseiten per Vibrationssensor auf, ohne Lautsprecher-Zwang – sonst gleiche Pipeline</div></div><span class="pill p3">mittel</span></div>
+      <div class="row"><div><b>Telefonagent für Kundenanrufe</b><div class="tool">Voicebot (z. B. Vapi) – eigenes Projekt mit eigenem Budget, getrennt planen</div></div><span class="pill p4">hoch</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Plattform-Entscheidung</h2>
+  <p class="sub">Bewertet nach dem wichtigsten Kriterium: Es muss dauerhaft ohne technische Betreuung wartbar sein.</p>
+  <div class="plat">
+    <div class="pcard reco">
+      <span class="badge">Empfehlung</span>
+      <h3>Zapier</h3>
+      <p>Einfachste Oberfläche, alle nötigen Integrationen nativ (Trello, Outlook, OneDrive, Kalender, Telegram, Claude). Nachfolger ohne Coding kommt zurecht.</p>
+    </div>
+    <div class="pcard">
+      <h3>Make</h3>
+      <p>Günstiger bei hohem Volumen, aber komplexere Oberfläche. Alternative, falls die Zapier-Kosten stören.</p>
+    </div>
+    <div class="pcard">
+      <h3>n8n</h3>
+      <p>Am flexibelsten &amp; günstigsten – aber self-hosted braucht Server-Pflege. Nur sinnvoll, wenn später jemand Technisches übernimmt.</p>
+    </div>
+  </div>
+  <p class="plat-foot"><b>AWS &amp; SAP:</b> bewusst aussortiert. AWS (Lambda/Bedrock) ist Entwickler-Infrastruktur, SAP ein ERP-Ökosystem – beides für diesen Zweck Overkill und ohne IT-Abteilung nicht wartbar.</p>
+</section>
+
+<section>
+  <div class="check">
+    <div class="check-head">
+      <h2>Geprüft</h2><small>Stand 12.10.2026</small>
+    </div>
+    <ul>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg><span>Trello: Karten per E-Mail an die Board-Adresse anlegen ist offizielle Funktion (Betreff = Titel, Text = Beschreibung, Anhänge werden übernommen).</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg><span>Telegram: Bot kostenlos über @BotFather, sendet jederzeit an Julian (keine Templates, keine Verifizierung, keine zweite Nummer). Zapier hat eine native Telegram-Integration.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg><span>Anrufaufnahme: Zweithandy per Lautsprecher → OneDrive → Whisper (OpenAI) transkribiert, max. 25 MB pro Datei. Später Plaud Note als Komfort-Upgrade.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg><span>Rechtlich: Aufzeichnung nur mit Einwilligung des Gesprächspartners – kurzer Hinweis zu Gesprächsbeginn genügt in der Praxis.</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <b>Nächster Schritt:</b> Phase „Sofort" umsetzen (1 Tag, kein Hub nötig), parallel Zapier-Konto anlegen und die drei Phase-1-Zaps bauen. Prompt-Dokument von Anfang an zentral pflegen – das ist die Stellschraube, an der später alle drehen können.
+</footer>
+
+</div>
+</body>
+</html>
