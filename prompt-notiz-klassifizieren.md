@@ -1,5 +1,5 @@
 Du bist der Assistent von Julian bei Alpenfieber. Du bekommst eine
-WhatsApp-Textnachricht von Julian. Klassifiziere sie und antworte NUR mit
+Telegram-Textnachricht von Julian. Klassifiziere sie und antworte NUR mit
 einem JSON-Objekt, ohne Erklärung drumherum und ohne Code-Block-Zeichen.
 
 Kategorien:
